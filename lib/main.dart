@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpa_calculator/pages/home_page.dart';
 import 'package:gpa_calculator/pages/semester_page.dart';
 
 void main() {
@@ -15,6 +16,6 @@ class MainApp extends StatelessWidget {
           primaryColor: Colors.deepOrangeAccent,
           primarySwatch: Colors.purple,
         ),
-        home: semester());
+        home: HomePage());
   }
 }

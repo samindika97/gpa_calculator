@@ -31,7 +31,7 @@ class _AddResultDialogState extends State<AddResultDialog> {
     super.dispose();
   }
 
-  var result_ranges = ['A+', 'A', 'B+', 'B', 'B-', 'C+', 'C', 'C-'];
+  var result_ranges = ['A+', 'A', 'B+', 'B', 'B-', 'C+', 'C', 'C-','D+','D','E'];
 
   @override
   Widget build(BuildContext context) {

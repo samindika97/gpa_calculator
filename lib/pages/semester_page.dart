@@ -2,68 +2,82 @@ import 'package:flutter/material.dart';
 import 'package:gpa_calculator/pages/add_result_dialog.dart';
 import 'package:gpa_calculator/pages/results_tile.dart';
 import 'package:gpa_calculator/util/calculate_gpa.dart';
-import 'package:gpa_calculator/util/results.dart';
+import 'package:gpa_calculator/util/semester.dart';
+import 'package:gpa_calculator/util/semester_card.dart';
 
-class semester extends StatefulWidget {
-  const semester({super.key});
+class Semester_page extends StatefulWidget {
+  final Semester semester;
+
+  Semester_page({super.key, required this.semester});
 
   @override
-  State<semester> createState() => _semesterState();
+  State<Semester_page> createState() => _Semester_pageState();
 }
 
-List<Result> results = [
-  Result(courseName: 'Math', grade: 'A', creditHours: 3, addToGpa: false),
-  Result(courseName: 'English', grade: 'B', creditHours: 4, addToGpa: true),
-  Result(courseName: 'History', grade: 'B', creditHours: 3, addToGpa: true),
-  Result(courseName: 'Science', grade: 'B', creditHours: 3, addToGpa: true),
-  Result(courseName: 'Computer Science', grade: 'B', creditHours: 4, addToGpa: true),
-  Result(courseName: 'Art', grade: 'B-', creditHours: 3, addToGpa: true),
-  Result(courseName: 'Geography', grade: 'B', creditHours: 3, addToGpa: true),
-  Result(courseName: 'Physics', grade: 'B', creditHours: 5, addToGpa: true),
-  Result(courseName: 'Chemistry', grade: 'B-', creditHours: 13, addToGpa: false),
-];
-
-var gpa = Calculate_GPA.getGpa(results) ;
-
-class _semesterState extends State<semester> {
+class _Semester_pageState extends State<Semester_page> {
   void checkboxchanged(bool? value, int index) {
     setState(() {
-      results[index].addToGpa = !results[index].addToGpa ;
+      widget.semester.results[index].addToGpa =
+          !widget.semester.results[index].addToGpa;
+      widget.semester
+          .setSemester_gpa(Calculate_GPA.getGpa(widget.semester.results));
     });
   }
 
-void addNewResult(){
-  showDialog(
-  context: context,
-  builder: (context) {
-    return AddResultDialog(
-      //function to invoke when new result added
-      onResultAdded: (result) {
-        setState(() {
-          results.add(result);
-        });
+  void addNewResult() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AddResultDialog(
+          //function to invoke when new result added
+          onResultAdded: (result) {
+            setState(() {
+              widget.semester.setResults(result);
+              widget.semester.setSemester_gpa(
+                  Calculate_GPA.getGpa(widget.semester.results));
+            });
+          },
+        );
       },
     );
-  },
-);
-
-}
+  }
 
   @override
   Widget build(BuildContext context) {
+    //  var semester_gpa = Calculate_GPA.getGpa(results); //get gpa of the semester
+    //  widget.semester.setResults();
+
     return Scaffold(
         appBar: AppBar(
-          title: Text(gpa.toString()),
+          title: Text("Samindika"),
           backgroundColor: Colors.greenAccent,
           elevation: 0,
         ),
         floatingActionButton: FloatingActionButton(
-        onPressed: addNewResult,
-        child: Icon(Icons.add),
-      ),
-        body: ListView.builder(
-            itemCount: results.length, itemBuilder: (contex, index) {
-              return ResultTile(result: results[index], onChanged: (value) => checkboxchanged(value, index));
-            }));
+          onPressed: addNewResult,
+          child: Icon(Icons.add),
+        ),
+        body: Column(
+          children: [
+            SemesterCard(semester: widget.semester),
+            Expanded(
+              child: SizedBox(
+                child: widget.semester.results.isEmpty
+                    ? Center(
+                        child: Text('No results available'),
+                      )
+                    : ListView.builder(
+                        itemCount: widget.semester.results.length,
+                        itemBuilder: (context, index) {
+                          return ResultTile(
+                            result: widget.semester.results[index],
+                            onChanged: (value) => checkboxchanged(value, index),
+                          );
+                        },
+                      ),
+              ),
+            )
+          ],
+        ));
   }
 }
