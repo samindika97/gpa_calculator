@@ -4,11 +4,14 @@ import 'package:gpa_calculator/pages/results_tile.dart';
 import 'package:gpa_calculator/util/calculate_gpa.dart';
 import 'package:gpa_calculator/util/semester.dart';
 import 'package:gpa_calculator/util/semester_card.dart';
+import 'package:gpa_calculator/util/semesters_model.dart';
 
 class Semester_page extends StatefulWidget {
   final Semester semester;
+  final SemestersModel semestersModel;
 
-  Semester_page({super.key, required this.semester});
+  Semester_page(
+      {super.key, required this.semester, required this.semestersModel});
 
   @override
   State<Semester_page> createState() => _Semester_pageState();
@@ -29,12 +32,12 @@ class _Semester_pageState extends State<Semester_page> {
       context: context,
       builder: (context) {
         return AddResultDialog(
-          //function to invoke when new result added
+          // function to invoke when new result added
           onResultAdded: (result) {
             setState(() {
-              widget.semester.setResults(result);
-              widget.semester.setSemester_gpa(
-                  Calculate_GPA.getGpa(widget.semester.results));
+              widget.semestersModel.updateSemester(
+                  widget.semestersModel.semesters_list.indexOf(widget.semester),
+                  result);
             });
           },
         );
