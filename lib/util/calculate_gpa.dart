@@ -1,4 +1,5 @@
 import 'package:gpa_calculator/util/results.dart';
+import 'package:gpa_calculator/util/semesters_model.dart';
 
 class Calculate_GPA {
   static var grade_points = {
@@ -34,5 +35,18 @@ class Calculate_GPA {
     print(totalQualityPoints);
 
     return totalQualityPoints / totalCreditHours;
+  }
+
+  static double calculateOverallGpa(SemestersModel semestersModel) {
+    double totalWeightedGPA = 0;
+    int totalCreditHours = 0;
+    for (var semester in semestersModel.semesterslist) {
+      double weightedGPA = semester.semesterGpa * semester.totalCreditHours;
+
+      totalWeightedGPA += weightedGPA;
+      totalCreditHours += semester.totalCreditHours;
+    }
+    double overallGPA = totalWeightedGPA / totalCreditHours;
+    return overallGPA;
   }
 }

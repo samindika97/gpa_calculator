@@ -4,13 +4,15 @@ import 'package:gpa_calculator/util/semester.dart';
 class SemesterCard extends StatefulWidget {
   final Semester semester;
 
-  const SemesterCard({super.key,required this.semester});
+  const SemesterCard({super.key, required this.semester});
 
   @override
   State<SemesterCard> createState() => _SemesterCardState();
 }
 
 class _SemesterCardState extends State<SemesterCard> {
+
+  
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
@@ -26,7 +28,7 @@ class _SemesterCardState extends State<SemesterCard> {
             ),
             SizedBox(height: 8),
             Text(
-              'GPA: ${widget.semester.semesterGpa.toStringAsFixed(2)}',
+              'GPA: ${widget.semester.semesterGpa}',
               style: TextStyle(fontSize: 16),
             ),
           ],

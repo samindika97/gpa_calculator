@@ -14,11 +14,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => SemestersModel(semesters_list: [
-        Semester(level: 1000, semesterNumber: 1),
-        Semester(level: 1000, semesterNumber: 2),
-        Semester(level: 2000, semesterNumber: 1),
-      ]),
+      create: (context) => SemestersModel(),
       child: MaterialApp(
         theme: ThemeData(
           primaryColor: Colors.deepOrangeAccent,
