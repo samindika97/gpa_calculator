@@ -17,6 +17,13 @@ class Calculate_GPA {
     'E': 0,
   };
 
+  static Map<int, double> levelWeightage = {
+    1000: 0.20,
+    2000: 0.20,
+    3000: 0.30,
+    4000: 0.0,
+  };
+
   static double getGpa(List<Result> results) {
     double totalQualityPoints = 0;
     int totalCreditHours = 0;
@@ -28,25 +35,37 @@ class Calculate_GPA {
       }
     }
     if (totalCreditHours == 0) {
-      return 0; // Avoid division by zero
+      return 0.0; // Avoid division by zero
     }
+    var overallGPA = totalQualityPoints / totalCreditHours;
+    overallGPA = double.parse(overallGPA.toStringAsFixed(2));
 
-    print(totalCreditHours);
-    print(totalQualityPoints);
-
-    return totalQualityPoints / totalCreditHours;
+    return overallGPA;
   }
 
   static double calculateOverallGpa(SemestersModel semestersModel) {
     double totalWeightedGPA = 0;
     int totalCreditHours = 0;
     for (var semester in semestersModel.semesterslist) {
-      double weightedGPA = semester.semesterGpa * semester.totalCreditHours;
+      double weightedGPA = semester.semesterGpa * semester.totalCreditHours * levelWeightage[semester.level]! ;
 
       totalWeightedGPA += weightedGPA;
       totalCreditHours += semester.totalCreditHours;
     }
+    if (totalCreditHours == 0) {
+      return 0; // Avoid division by zero
+    }
     double overallGPA = totalWeightedGPA / totalCreditHours;
+    overallGPA = double.parse(overallGPA.toStringAsFixed(2));
     return overallGPA;
+  }
+
+  static int getTotalCredit(SemestersModel semestersModel) {
+    int totalCreditHours = 0;
+
+    for (var semester in semestersModel.semesterslist) {
+      totalCreditHours += semester.totalCreditHours;
+    }
+    return totalCreditHours;
   }
 }

@@ -4,7 +4,7 @@ import 'package:gpa_calculator/util/results.dart';
 class Semester {
   int level;
   int semesterNumber;
-  late int totalCreditHours;
+  late int totalCreditHours = 0;
   late double semesterGpa;
   late List<Result> results = [];
 

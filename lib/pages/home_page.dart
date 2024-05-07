@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
           Container(
             color: Colors.blue,
             padding: EdgeInsets.all(8.0),
-            child: OverallCard(semestermodel: semestersModel,),
+            child: OverallCard(semestersmodel: semestersModel,),
           ),
           GridView.builder(
             shrinkWrap: true,

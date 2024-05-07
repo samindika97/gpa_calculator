@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gpa_calculator/util/calculate_gpa.dart';
 import 'package:gpa_calculator/util/results.dart';
 import 'package:gpa_calculator/util/semester.dart';
 
