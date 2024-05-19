@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gpa_calculator/pages/import_data.dart';
 import 'package:gpa_calculator/pages/semester_page.dart';
 import 'package:gpa_calculator/util/overallcard.dart';
 import 'package:gpa_calculator/util/semester_card.dart';
@@ -11,6 +12,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
@@ -22,7 +24,9 @@ class _HomePageState extends State<HomePage> {
           Container(
             color: Colors.blue,
             padding: EdgeInsets.all(8.0),
-            child: OverallCard(semestersmodel: semestersModel,),
+            child: OverallCard(
+              semestersmodel: semestersModel,
+            ),
           ),
           GridView.builder(
             shrinkWrap: true,
@@ -53,6 +57,18 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      ImportData(semestersModel: semestersModel),
+                ),
+              );
+            },
+            child: Text("IMPORT"),
+          )
         ],
       ),
     );

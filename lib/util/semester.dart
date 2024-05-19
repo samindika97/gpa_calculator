@@ -31,4 +31,9 @@ class Semester {
       totalCreditHours += result.creditHours;
     }
   }
+  
+  void updateLevel(String levelandNumber){
+   // level = 4000 ;
+    print("not implemented updated");
+  }
 }

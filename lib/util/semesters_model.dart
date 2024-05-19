@@ -29,4 +29,9 @@ class SemestersModel with ChangeNotifier {
     semester.updateGpaAndCredit() ;
     notifyListeners();
   }
+
+  void updateSemesterlevel(Semester semester, String levelandNumber){
+    semester.updateLevel(levelandNumber) ;
+    notifyListeners();
+  }
 }
