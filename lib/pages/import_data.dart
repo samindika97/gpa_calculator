@@ -1,6 +1,7 @@
 import "dart:io";
 import "package:flutter/material.dart";
 import "package:file_picker/file_picker.dart";
+import "package:gpa_calculator/util/results.dart";
 import "package:gpa_calculator/util/semesters_model.dart";
 import 'package:html/parser.dart' as parser;
 
@@ -17,26 +18,40 @@ class _ImportDataState extends State<ImportData> {
   void _parseData(String contentString) {
     // Parse the HTML content
     final document = parser.parse(contentString);
+    final resultTable = document.querySelector('table');
 
-    final usersemesterlist = document
-        .querySelectorAll(
-            'td[colspan="8"][style="font-weight: bold; font-size: larger;"]')
-        .map((e) => e.innerHtml)
-        .toList();
+    if (resultTable != null) {
+      List tableRows = resultTable.querySelectorAll("tr");
 
-    int numOfSemesters = usersemesterlist.length;
+      int semesterCount = -1;
+      tableRows.forEach((row) {
+        List cells = row.querySelectorAll('td');
+        if (cells.length == 1) {
+          semesterCount++;
+        } else if (cells.length == 5) {
+          var courseName = cells[1].text.trim();
+          var grade = cells[4].text.trim();
+          var creditHoursText = cells[3].text.trim();
+          var creditHours = 0;
+          try {
+            creditHours = int.parse(creditHoursText);
+          } catch (e) {
+            print('Error parsing credits: $e');
+            return;
+          }
 
-    final regExp = RegExp(r'Semester:\s(\d{4}/\d{4})\s-\s(\d)');
-
-    final match = regExp.firstMatch(usersemesterlist[0]);
-
-    setState(() {
-
-      widget.semestersModel.updateSemesterlevel(
-          widget.semestersModel.semesterslist[0], "text");
-
-      print(widget.semestersModel.semesterslist[0].level);
-    });
+          if (grade != '') {
+            var newResult = Result(
+                courseName: courseName,
+                grade: grade,
+                creditHours: creditHours,
+                addToGpa: true);
+            widget.semestersModel.updateSemester(
+                widget.semestersModel.semesterslist[semesterCount], newResult);
+          }
+        }
+      });
+    }
   }
 
   void _pickfile() async {

@@ -31,6 +31,10 @@ class _SemesterCardState extends State<SemesterCard> {
               'GPA: ${widget.semester.semesterGpa}',
               style: TextStyle(fontSize: 16),
             ),
+            Text(
+              'Credits: ${widget.semester.totalCreditHours}',
+              style: TextStyle(fontSize: 14),
+            ),
           ],
         ),
       ),

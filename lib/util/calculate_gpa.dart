@@ -15,13 +15,15 @@ class Calculate_GPA {
     'D+': 1.3,
     'D': 1.0,
     'E': 0,
+    'AB' : 0,
+    'P' : 0
   };
 
   static Map<int, double> levelWeightage = {
-    1000: 0.20,
-    2000: 0.20,
-    3000: 0.30,
-    4000: 0.0,
+    1000: 1,
+    2000: 1.0,
+    3000: 1.0,
+    4000: 1.0,
   };
 
   static double getGpa(List<Result> results) {
